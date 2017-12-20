@@ -17,7 +17,6 @@
 package io.pivotal.spring.cloud.service.eureka;
 
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.cloud.commons.util.InetUtils;
 import org.springframework.cloud.netflix.eureka.EurekaInstanceConfigBean;
 import org.springframework.core.env.Environment;
@@ -38,8 +37,8 @@ final class SanitizingEurekaInstanceConfigBean extends EurekaInstanceConfigBean 
 		super.setEnvironment(environment);
 		// set some defaults from the environment, but allow the defaults to use
 		// relaxed binding
-		String springAppName = getSpringApplicationName();
-		String eurekaInstanceAppname = getEurekaInstanceAppnameProperty();
+		String springAppName = getEnvironment().getProperty("spring.application.name");
+		String eurekaInstanceAppname = getEnvironment().getProperty("eureka.instance.appname");
 		if (StringUtils.hasText(eurekaInstanceAppname)) {
 			// default to eureka.instance.appname if defined
 			setVirtualHostName(eurekaInstanceAppname);
@@ -56,17 +55,7 @@ final class SanitizingEurekaInstanceConfigBean extends EurekaInstanceConfigBean 
 			setSecureVirtualHostName(sanitizedAppName);
 		}
 	}
-
-	private String getSpringApplicationName() {
-		RelaxedPropertyResolver propertyResolver = new RelaxedPropertyResolver(getEnvironment(), "spring.application.");
-		return propertyResolver.getProperty("name");
-	}
-
-	private String getEurekaInstanceAppnameProperty() {
-		RelaxedPropertyResolver propertyResolver = new RelaxedPropertyResolver(getEnvironment(), "eureka.instance.");
-		return propertyResolver.getProperty("appname");
-	}
-
+	
 	// RFC 952 defines the valid character set for hostnames.
 	private String sanitizeHostname(String hostname) {
 		if (hostname == null) {

@@ -71,6 +71,11 @@ public class EurekaOAuth2RequestDecorator implements DiscoveryRequestDecorator {
 			protected ClientHttpResponse executeInternal(HttpHeaders headers) throws IOException {
 				return null;
 			}
+
+			@Override
+			public String getMethodValue() {
+				return null;
+			}
 		};
 		requestAuthenticator.authenticate(oauth2RestTemplate.getResource(),
 				oauth2RestTemplate.getOAuth2ClientContext(), requestHeaderExtrator);

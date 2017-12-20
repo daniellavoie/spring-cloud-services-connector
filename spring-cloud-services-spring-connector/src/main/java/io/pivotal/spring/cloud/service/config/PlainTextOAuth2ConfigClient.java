@@ -17,6 +17,7 @@
 package io.pivotal.spring.cloud.service.config;
 
 import org.springframework.cloud.config.client.ConfigClientProperties;
+import org.springframework.cloud.config.client.ConfigServicePropertySourceLocator;
 import org.springframework.core.io.Resource;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
@@ -41,8 +42,9 @@ class PlainTextOAuth2ConfigClient implements PlainTextConfigClient {
 	private RestTemplate restTemplate;
 
 	protected PlainTextOAuth2ConfigClient(final OAuth2ProtectedResourceDetails resource,
+			ConfigServicePropertySourceLocator locator,
 			final ConfigClientProperties configClientProperties) {
-		this.restTemplate = new OAuth2RestTemplate(resource);
+		this.restTemplate = locator.setRestTemplate(restTemplate);
 
 		this.configClientProperties = configClientProperties;
 	}

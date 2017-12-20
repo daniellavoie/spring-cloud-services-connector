@@ -26,9 +26,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.cloud.config.client.ConfigClientProperties;
 import org.springframework.core.io.Resource;
 import org.springframework.security.oauth2.client.resource.OAuth2AccessDeniedException;
@@ -76,7 +76,7 @@ public class PlainTextOauth2ConfigClientTest {
 
 	@Before
 	public void setup() {
-		resource.setAccessTokenUri("http://localhost:" + port + "/oauth/token");
+		resource.setAccessTokenUri("http://localhost:" + port + "/mock-oauth/token");
 		configClientProperties.setName("app");
 		configClientProperties.setProfile(null);
 		configClientProperties.setUri("http://localhost:" + port);

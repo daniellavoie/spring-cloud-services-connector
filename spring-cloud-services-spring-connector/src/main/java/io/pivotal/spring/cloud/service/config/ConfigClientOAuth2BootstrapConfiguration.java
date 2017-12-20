@@ -57,6 +57,9 @@ public class ConfigClientOAuth2BootstrapConfiguration {
 		@Autowired
 		private ConfigClientOAuth2ResourceDetails configClientOAuth2ResourceDetails;
 		
+		@Autowired
+		private ConfigClientRestTemplateHolder configClientRestTemplateHolder;
+		
 		@PostConstruct
 		public void init() {
 			 locator.setRestTemplate(new OAuth2RestTemplate(configClientOAuth2ResourceDetails));

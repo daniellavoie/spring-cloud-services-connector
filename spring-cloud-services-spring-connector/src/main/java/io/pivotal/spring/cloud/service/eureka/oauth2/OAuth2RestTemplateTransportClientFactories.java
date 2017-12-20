@@ -1,6 +1,10 @@
 package io.pivotal.spring.cloud.service.eureka.oauth2;
 
 import java.util.Collection;
+import java.util.Optional;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
 
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClientConfig;
@@ -29,6 +33,14 @@ public class OAuth2RestTemplateTransportClientFactories
 	public TransportClientFactory newTransportClientFactory(
 			EurekaClientConfig clientConfig, Collection<Void> additionalFilters,
 			InstanceInfo myInstanceInfo) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public TransportClientFactory newTransportClientFactory(
+			EurekaClientConfig clientConfig, Collection<Void> additionalFilters,
+			InstanceInfo myInstanceInfo, Optional<SSLContext> sslContext,
+			Optional<HostnameVerifier> hostnameVerifier) {
 		return new OAuth2RestTemplateTransportClientFactory(
 				this.eurekaOAuth2ResourceDetails);
 	}
